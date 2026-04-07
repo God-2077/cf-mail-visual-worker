@@ -19,7 +19,7 @@
 npm install
 ```
 
-## 2.1 仓库发布模板（不提交个人 ID 配置）
+## 2.1 仓库发布模板
 
 本项目仓库中提供 [wrangler.toml.example](wrangler.toml.example) 模板，真实的 `wrangler.toml` 属于本地个人配置（包含 Cloudflare Namespace ID），默认不上传。
 
