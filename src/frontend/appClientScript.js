@@ -185,19 +185,19 @@ export function initMailDashboardApp() {
         alert(message);
       }
   
-      function authHeaders() {
-        const token = getActiveAccount()?.token || '';
+      function authHeaders(overrideToken='') {
+        const token = (overrideToken || '').trim() || getActiveAccount()?.token || '';
         if (!token) return {};
         // Worker 端按 Bearer Token 进行鉴权
         return { Authorization: 'Bearer ' + token };
       }
   
-      async function api(path, init={}) {
+      async function api(path, init={}, overrideToken='') {
         const res = await fetch(path, {
           ...init,
           headers: {
             'content-type': 'application/json',
-            ...authHeaders(),
+            ...authHeaders(overrideToken),
             ...(init.headers || {})
           }
         });
@@ -367,11 +367,11 @@ export function initMailDashboardApp() {
         return '';
       }
   
-      async function ensureMailboxExists(email) {
+      async function ensureMailboxExists(email, token) {
         const normalizedEmail = normalizeEmail(email || '');
         try {
           // 提前校验邮箱是否可访问，减少失败提交
-          const result = await api('/api/mailboxes/exists?address=' + encodeURIComponent(normalizedEmail));
+          const result = await api('/api/mailboxes/exists?address=' + encodeURIComponent(normalizedEmail), {}, token);
           return !!result.exists;
         } catch (err) {
           showValidationError('邮箱存在性校验失败: ' + err.message);
@@ -391,7 +391,7 @@ export function initMailDashboardApp() {
           return;
         }
   
-        const mailboxExists = await ensureMailboxExists(email);
+        const mailboxExists = await ensureMailboxExists(email, token);
         if (!mailboxExists) {
           showValidationError('该收件地址不存在或当前账号无权限访问，请先确认邮箱路由已配置。');
           return;
