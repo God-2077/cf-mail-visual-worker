@@ -7,24 +7,24 @@
       <h1 class="title">Cloudflare 邮件可视化收件箱</h1>
       <div class="account-tools">
         <!-- 当前账户切换 -->
-        <select id="accountSelect" class="account-select"></select>
+        <select id="accountSelect" class="account-select" title="选择账户" aria-label="选择账户"></select>
         <!-- 打开账户管理弹窗 -->
         <button id="manageAccountsBtn">账户设置</button>
       </div>
     </section>
 
     <!-- 控制区：刷新与清空 -->
-    <section class="panel" style="margin-bottom:14px;">
+    <section class="panel panel-spaced">
       <div class="panel-head">
         <div>控制台</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <div class="panel-actions">
           <!-- 拉取最新邮件列表 -->
           <button id="refreshBtn">刷新</button>
           <!-- 清空当前租户可见邮件 -->
           <button id="clearBtn" class="btn-secondary">清空全部</button>
         </div>
       </div>
-      <div style="padding: 10px 12px;" class="meta">
+      <div class="meta panel-meta">
         邮件由 Cloudflare Email Worker 接收并写入 KV。页面通过 API 实时读取。
         <div id="status" class="status"></div>
       </div>
@@ -77,7 +77,7 @@
 
       <div class="token-modal-actions">
         <!-- 退出编辑模式 -->
-        <button id="accountResetBtn" class="btn-secondary" style="display:none;">取消编辑</button>
+        <button id="accountResetBtn" class="btn-secondary is-hidden">取消编辑</button>
         <!-- 关闭弹窗不保存 -->
         <button id="tokenCancelBtn" class="btn-secondary">关闭</button>
         <!-- 提交新增或编辑 -->
